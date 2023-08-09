@@ -58,7 +58,7 @@ export default function SignInForm({
         className={cn(buttonVariants({ variant: "outline" }))}
         onClick={() => {
           setIsGoogleLoading(true);
-          signIn("google", { callbackUrl: "/dashboard" });
+          signIn("google", { callbackUrl: "https://watchsync.net/dashboard" });
         }}
         disabled={isLoading || isGoogleLoading}
       >
