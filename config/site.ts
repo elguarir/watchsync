@@ -1,7 +1,7 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "TrackFlix",
+  name: "WatchSync",
   description:
-    "TrackFlix is a free application that allows you to track your favorite movies and TV shows.",
+    "WatchSync is a free application that allows you to track your favorite movies and TV shows.",
 };

@@ -1,11 +1,25 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
-
 import { Inter } from "next/font/google";
 import { siteConfig } from "@/config/site";
-import { SiteHeader } from "@/components/site-header";
+import localFont from "next/font/local";
 
+const bespoke = localFont({
+  src: [
+    {
+      path: "./fonts/Bespoke/BespokeSerif-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Bespoke/BespokeSerif-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-serif",
+});
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -32,9 +46,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`${inter.className} ${bespoke.variable}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <SiteHeader />
           {children}
         </ThemeProvider>
       </body>

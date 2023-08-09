@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 
+main.py
 # testing
 /coverage
 

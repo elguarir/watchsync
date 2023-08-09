@@ -5,12 +5,11 @@ import {
   HamburgerMenuIcon as Menu,
   Cross1Icon as X,
 } from "@radix-ui/react-icons";
-import { ModeToggle } from "./theme-toggler";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Card } from "./ui/card";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-export default function MobileNav() {
+import { useSession } from "next-auth/react";
+export default function MobileNav({ session }: { session: any }) {
   const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -20,6 +19,7 @@ export default function MobileNav() {
       document.body.classList.remove("no-scroll");
     }
   }, [open]);
+
   return (
     <>
       {/* menu toggle */}
@@ -68,28 +68,40 @@ export default function MobileNav() {
                 <span className="text-[0.975rem] font-medium">Appearence</span>
                 <ModeToggle />
               </Card> */}
-              <div className="flex items-center w-full mt-4 space-x-2">
-                <Link
-                  onClick={() => setOpen(false)}
-                  href="/login"
-                  className={cn(
-                    buttonVariants({ size: "default", variant: "outline" }),
-                    "flex-1"
-                  )}
-                >
-                  <span>Login</span>
-                </Link>
-                <Link
-                  onClick={() => setOpen(false)}
-                  href="/signup"
-                  className={cn(
-                    buttonVariants({ size: "default", variant: "default" }),
-                    "flex-1"
-                  )}
-                >
-                  <span>Sign Up</span>
-                </Link>
-              </div>
+              {session ? (
+                <div className="flex items-center w-full mt-4 space-x-2">
+                  <Link
+                    href="/dashboard"
+                    className={cn(
+                      buttonVariants({ size: "default", variant: "default" }),
+                      "flex-1"
+                    )}
+                  >
+                    <span>Dashboard</span>
+                  </Link>
+                </div>
+              ) : (
+                <div className="flex items-center w-full mt-4 space-x-2">
+                  <Link
+                    href="/login"
+                    className={cn(
+                      buttonVariants({ size: "default", variant: "outline" }),
+                      "flex-1"
+                    )}
+                  >
+                    <span>Login</span>
+                  </Link>
+                  <Link
+                    href="/signup"
+                    className={cn(
+                      buttonVariants({ size: "default", variant: "default" }),
+                      "flex-1"
+                    )}
+                  >
+                    <span>Sign Up</span>
+                  </Link>
+                </div>
+              )}
             </div>
           </motion.div>
         )}
