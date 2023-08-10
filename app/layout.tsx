@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Inter } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import localFont from "next/font/local";
+import { Toaster } from "react-hot-toast";
 
 const bespoke = localFont({
   src: [
@@ -25,7 +26,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
+    template: `%s — ${siteConfig.name}`,
   },
   description: siteConfig.description,
   themeColor: [
@@ -49,6 +50,7 @@ export default function RootLayout({
       <body className={`${inter.className} ${bespoke.variable}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

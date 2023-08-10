@@ -2,7 +2,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import DashboardHeader from "@/components/DashboardHeader";
-import { Toaster } from "react-hot-toast";
 interface DashboardLayoutProps {
   children: React.ReactNode;
 }
@@ -20,7 +19,6 @@ export default async function DashboardLayout({
     <div className="min-h-screen">
       <DashboardHeader initials={initials} session={session} />
       <main className="px-6 py-10 md:container">{children}</main>
-      <Toaster />
     </div>
   );
 }

@@ -3,17 +3,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Home — WatchSync",
+  title: "Home",
   description: "Track, Discover, and Rate Your Favorite Movies and TV Shows.",
 };
 
 export default function Home() {
   return (
-    <main className="container flex flex-col items-center w-full min-h-screen px-4 py-20 lg:p-20">
+    <main className="container flex flex-col items-center w-full min-h-[100dvh] px-4 py-20 lg:p-20">
       <section className="pt-6 pb-8 space-y-6 md:pb-12 md:pt-10">
         <div className="flex w-full mx-auto max-w-[64rem] flex-col items-center gap-4 text-center">
           <a
-            className="px-3 py-1 text-xs font-medium w-fit rounded-2xl bg-muted"
+            className="px-3 py-1 text-xs font-medium min-w-fit rounded-2xl bg-muted"
             target="_blank"
             href="https://twitter.com/watchsync"
           >
@@ -46,7 +46,7 @@ export default function Home() {
               <Link href="#">Get Started</Link>
             </Button>
             <Button asChild variant={"outline"}>
-              <Link href="#">Login</Link>
+              <Link href="/login">Login</Link>
             </Button>
           </div>
         </div>
