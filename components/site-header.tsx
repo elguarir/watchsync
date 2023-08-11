@@ -4,7 +4,8 @@ import { MainNav } from "@/components/main-nav";
 import MobileNav from "./MobileNav";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-
+import { Separator } from "./ui/separator";
+import { ModeToggle } from "./theme-toggler";
 
 export async function SiteHeader() {
   const session = await getServerSession(authOptions);
@@ -16,6 +17,8 @@ export async function SiteHeader() {
           <nav className="flex items-center space-x-2">
             {!session ? (
               <>
+                <ModeToggle className="w-10 h-10" />
+                <Separator orientation="vertical" className="h-5" />
                 <Link href="/login">
                   <div
                     className={buttonVariants({

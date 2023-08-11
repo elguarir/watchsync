@@ -9,6 +9,8 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
+import { ModeToggle } from "./theme-toggler";
+import { Card } from "./ui/card";
 export default function MobileNav({ session }: { session: any }) {
   const [open, setOpen] = useState<boolean>(false);
 
@@ -22,7 +24,6 @@ export default function MobileNav({ session }: { session: any }) {
 
   return (
     <>
-      {/* menu toggle */}
       <Button
         aria-label="menu toggle"
         variant={"ghost"}
@@ -64,10 +65,6 @@ export default function MobileNav({ session }: { session: any }) {
               >
                 Templates
               </Link>
-              {/* <Card className="flex items-center justify-between w-full px-2 py-1 pl-3 mt-4 bg-card/60">
-                <span className="text-[0.975rem] font-medium">Appearence</span>
-                <ModeToggle />
-              </Card> */}
               {session ? (
                 <div className="flex items-center w-full mt-4 space-x-2">
                   <Link
@@ -102,6 +99,10 @@ export default function MobileNav({ session }: { session: any }) {
                   </Link>
                 </div>
               )}
+              <Card className="flex items-center justify-between w-full px-2 py-1 pl-3 mt-4 bg-card/60">
+                <span className="text-sm font-medium">Appearence</span>
+                <ModeToggle className="w-8 h-8" />
+              </Card>
             </div>
           </motion.div>
         )}

@@ -1,17 +1,16 @@
 import { Metadata } from "next";
 import Link from "next/link";
-
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-// import { Icons } from "@/components/icons"
-import SignInForm from "@/components/signin-form";
+import SignInForm from "@/components/auth/signin-form";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 export const metadata: Metadata = {
   title: "Login",
   description: "Login to your account",
 };
 
-export default function LoginPage() {
+export default function LoginPage({ searchParams }: { searchParams: any }) {
+  const error = searchParams.error;
   return (
     <div className="container flex flex-col items-center justify-center w-screen h-screen">
       <Link
@@ -36,13 +35,13 @@ export default function LoginPage() {
             Enter your email to sign in to your account
           </p>
         </div>
-        <SignInForm />
+        <SignInForm error={error} />
         <p className="px-8 text-sm text-center text-muted-foreground">
           <Link
             href="/signup"
             className="underline font-[450] transition-colors duration-300 hover:text-primary underline-offset-4"
           >
-            Don&apos;t have an account? Sign Up
+            Don't have an account? Sign Up
           </Link>
         </p>
       </div>

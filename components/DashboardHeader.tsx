@@ -39,7 +39,7 @@ export default function DashboardHeader({ session, initials }: any) {
           <button className="rounded-full outline-none">
             <Avatar>
               <AvatarImage
-                src={session.user.image}
+                src={session?.user?.image}
                 className="cursor-pointer"
               />
               <AvatarFallback className="cursor-pointer">

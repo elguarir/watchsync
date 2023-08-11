@@ -13,8 +13,19 @@ export default async function DashboardLayout({
   if (!session) {
     redirect("/login");
   }
-  let [first, last] = session.user.name.split(" ");
-  const initials = first.charAt(0) + last.charAt(0);
+  const name = session.user.name;
+  let initials = "";
+  // gettings the initials of the user
+  if (name.split(/\s+/).length === 1) {
+    initials = name.slice(0, 2).toUpperCase();
+  } else {
+    let rgx = new RegExp(/(\p{L}{1})\p{L}+/, "gu");
+    let matches = [...name.matchAll(rgx)] || [];
+    initials = (
+      (matches.shift()?.[1] || "") + (matches.pop()?.[1] || "")
+    ).toUpperCase();
+  }
+
   return (
     <div className="min-h-screen">
       <DashboardHeader initials={initials} session={session} />

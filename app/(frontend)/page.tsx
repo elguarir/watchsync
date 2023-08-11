@@ -37,7 +37,7 @@ export default function Home() {
             </span>
             .
           </h1>
-          <p className="leading-snug text-sm tracking-wide  [text-wrap:balance] text-muted-foreground sm:text-xl">
+          <p className="leading-snug text-sm tracking-wide max-w-lg mt-2 [text-wrap:balance] text-muted-foreground sm:text-base">
             WatchSync helps you keep track of every movie and TV show you've
             watched, want to watch, and fell in love with.
           </p>
