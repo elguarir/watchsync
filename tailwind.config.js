@@ -18,6 +18,8 @@ module.exports = {
     extend: {
       fontFamily: {
         serif: ["var(--font-serif)"],
+        clash: ["var(--font-clash)"],
+        general: ["var(--font-general)"],
       },
       colors: {
         border: "hsl(var(--border))",

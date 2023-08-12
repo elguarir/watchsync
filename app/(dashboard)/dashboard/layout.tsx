@@ -29,7 +29,7 @@ export default async function DashboardLayout({
   return (
     <div className="min-h-screen">
       <DashboardHeader initials={initials} session={session} />
-      <main className="px-6 py-10 md:container">{children}</main>
+      <main className="flex flex-col flex-1 h-[calc(100vh-64px)] px-5 py-6 md:container">{children}</main>
     </div>
   );
 }

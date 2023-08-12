@@ -3,10 +3,8 @@ import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-// import { Icons } from "@/components/icons"
-import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import SignUpForm from "@/components/auth/signup-form";
-
+import Illustration from "@/public/images/registration-illustration.svg";
 export const metadata: Metadata = {
   title: "Login",
   description: "Login to your account",
@@ -26,7 +24,7 @@ export default function LoginPage() {
       </Link>
       <div className="items-center justify-center hidden h-full bg-muted lg:flex">
         <img
-          src="./images/registration-illustration.svg"
+          src={Illustration.src}
           alt="Registration Illustration"
           className="w-[28rem] 2xl:w-[36rem]"
         />
@@ -34,7 +32,7 @@ export default function LoginPage() {
       <div className="w-screen px-6 lg:w-auto lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 max-w-[350px]">
           <div>
-            <div className="flex flex-col space-y-2 text-center">
+            <div className="flex flex-col mb-6 space-y-2 text-center">
               {/* <Icons.logo className="w-6 h-6 mx-auto" /> */}
               <h1 className="text-2xl font-semibold tracking-tight">
                 Create an account
