@@ -206,7 +206,7 @@ export default function DashboardHeader({ session, initials }: any) {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/dashboard" className="cursor-pointer">
+                <Link href="/dashboard/movies" className="cursor-pointer">
                   <svg
                     className="w-[1.1rem] h-[1.1rem]  mr-2 fill-foreground"
                     xmlns="http://www.w3.org/2000/svg"

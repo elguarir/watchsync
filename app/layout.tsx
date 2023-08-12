@@ -23,52 +23,52 @@ const bespoke = localFont({
   variable: "--font-serif",
 });
 
-const clash = localFont({
-  src: [
-    {
-      path: "./fonts/ClashDisplay/ClashDisplay-Regular.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "./fonts/ClashDisplay/ClashDisplay-Medium.woff2",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "./fonts/ClashDisplay/ClashDisplay-SemiBold.woff2",
-      weight: "600",
-      style: "normal",
-    },
-    {
-      path: "./fonts/ClashDisplay/ClashDisplay-Bold.woff2",
-      weight: "700",
-      style: "normal",
-    },
-  ],
-  variable: "--font-clash",
-});
+// const clash = localFont({
+//   src: [
+//     {
+//       path: "./fonts/ClashDisplay/ClashDisplay-Regular.woff2",
+//       weight: "400",
+//       style: "normal",
+//     },
+//     {
+//       path: "./fonts/ClashDisplay/ClashDisplay-Medium.woff2",
+//       weight: "500",
+//       style: "normal",
+//     },
+//     {
+//       path: "./fonts/ClashDisplay/ClashDisplay-SemiBold.woff2",
+//       weight: "600",
+//       style: "normal",
+//     },
+//     {
+//       path: "./fonts/ClashDisplay/ClashDisplay-Bold.woff2",
+//       weight: "700",
+//       style: "normal",
+//     },
+//   ],
+//   variable: "--font-clash",
+// });
 
-const generalsans = localFont({
-  src: [
-    {
-      path: "./fonts/GeneralSans/GeneralSans-Regular.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "./fonts/GeneralSans/GeneralSans-Medium.woff2",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "./fonts/GeneralSans/GeneralSans-SemiBold.woff2",
-      weight: "600",
-      style: "normal",
-    },
-  ],
-  variable: "--font-general",
-});
+// const generalsans = localFont({
+//   src: [
+//     {
+//       path: "./fonts/GeneralSans/GeneralSans-Regular.woff2",
+//       weight: "400",
+//       style: "normal",
+//     },
+//     {
+//       path: "./fonts/GeneralSans/GeneralSans-Medium.woff2",
+//       weight: "500",
+//       style: "normal",
+//     },
+//     {
+//       path: "./fonts/GeneralSans/GeneralSans-SemiBold.woff2",
+//       weight: "600",
+//       style: "normal",
+//     },
+//   ],
+//   variable: "--font-general",
+// });
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -99,9 +99,9 @@ export default function RootLayout({
       <body
         className={cn(
           bespoke.variable,
-          clash.variable,
+          // clash.variable,
           inter.className,
-          generalsans.variable
+          // generalsans.variable
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

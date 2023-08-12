@@ -4,7 +4,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import SignUpForm from "@/components/auth/signup-form";
-import Illustration from "@/public/images/registration-illustration.svg";
+// import Illustration from "@/public/images/registration-illustration.svg";
 export const metadata: Metadata = {
   title: "Login",
   description: "Login to your account",
@@ -24,7 +24,7 @@ export default function LoginPage() {
       </Link>
       <div className="items-center justify-center hidden h-full bg-muted lg:flex">
         <img
-          src={Illustration.src}
+          src="images/registration-illustration.svg"
           alt="Registration Illustration"
           className="w-[28rem] 2xl:w-[36rem]"
         />
