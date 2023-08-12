@@ -68,6 +68,7 @@ export default async function MoviePage({
           <iframe
             className="w-full h-full"
             src={`https://vidsrc.to/embed/movie/${movie.imdb_id}`}
+            sandbox="allow-scripts allow-same-origin allow-forms"
           />
         </div>
       </div>
