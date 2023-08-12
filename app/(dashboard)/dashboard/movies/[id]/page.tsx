@@ -63,14 +63,16 @@ export default async function MoviePage({
             </div>
           </div>
         </Card>
-        <div className="flex flex-col w-full mt-6 aspect-video">
-          <span className="font-[550] text-lg text-center">Watch {movie.title} </span>
+        <div className="flex flex-col w-full mt-6">
+          <span className="font-[550] text-lg mb-6 text-center">Watch {movie.title} </span>
+          <div className="aspect-video w-full">
           <iframe
-            className="w-full h-full"
+            className="w-full min-h-[400px] h-full"
             src={`https://vidsrc.to/embed/movie/${movie.imdb_id}`}
             sandbox="allow-scripts allow-same-origin allow-forms"
             allowFullScreen
           />
+            </div>
         </div>
       </div>
     </div>
