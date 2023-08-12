@@ -20,15 +20,15 @@ export default async function MoviePage({
   const movie: MovieDetails = await res.json();
 
   return (
-    <div className="flex flex-col pb-16">
+    <div className="flex md:w-[80%] mx-auto flex-col pb-16">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-medium tracking-wide font-general">
           {movie.title}
         </h1>
       </div>
       <div className="flex flex-col pt-4">
-        <Card className="flex items-center gap-4 p-3 h-fit">
-          <div className="h-auto w-[105px] rounded-md overflow-hidden shadow-sm">
+        <Card className="flex flex-col items-center gap-4 p-3 h-fit">
+          <div className="h-auto overflow-hidden rounded-md shadow max-h-80">
             <Image
               width={1080}
               height={1920}
@@ -37,12 +37,9 @@ export default async function MoviePage({
               className="object-cover w-full h-full"
             />
           </div>
-          <div className="flex-1 h-full py-3">
+          <div className="flex-1 h-full py-3 space-y-3">
             <div className="pb-1 font-medium">
-              <Link
-                className="line-clamp-2"
-                href={`movies/${movie?.id}-${movie?.title.toLowerCase()}`}
-              >
+              <h2 className="text-xl">
                 {movie?.title}
                 <span className="text-muted-foreground">
                   {" "}
@@ -51,7 +48,7 @@ export default async function MoviePage({
                     getYear(new Date(movie?.release_date))}
                   )
                 </span>
-              </Link>
+              </h2>
             </div>
             <p className="text-sm">{movie?.overview}</p>
             <div className="flex flex-wrap items-center gap-2 mt-1">
@@ -63,16 +60,18 @@ export default async function MoviePage({
             </div>
           </div>
         </Card>
-        <div className="flex flex-col w-full mt-6">
-          <span className="font-[550] text-lg mb-6 text-center">Watch {movie.title} </span>
-          <div className="aspect-video w-full">
-          <iframe
-            className="w-full min-h-[400px] h-full"
-            src={`https://vidsrc.to/embed/movie/${movie.imdb_id}`}
-            sandbox="allow-scripts allow-same-origin allow-forms"
-            allowFullScreen
-          />
-            </div>
+        <div className="flex flex-col w-full mt-12 space-y-4">
+          <span className="font-[550] text-lg mb-6 text-center">
+            Watch {movie.title}{" "}
+          </span>
+          <div className="w-full aspect-video">
+            <iframe
+              className="w-full aspect-video"
+              src={`https://vidsrc.to/embed/movie/${movie.imdb_id}`}
+              sandbox="allow-scripts allow-same-origin allow-forms"
+              allowFullScreen
+            />
+          </div>
         </div>
       </div>
     </div>
