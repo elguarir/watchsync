@@ -54,7 +54,7 @@ export default function SignUpForm({
     <>
       {success ? (
         <>
-          <div className="relative flex flex-col items-center justify-between p-4 text-sm text-green-800 border rounded-lg bg-green-50 dark:bg-green-500/10 dark:text-green-500 border-green-500/10">
+          <div className="relative flex flex-col items-center justify-between p-4 mb-6 text-sm text-green-800 border rounded-lg bg-green-50 dark:bg-green-500/10 dark:text-green-500 border-green-500/10">
             <div className="flex items-center mb-2 space-x-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

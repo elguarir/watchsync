@@ -12,10 +12,10 @@ export default async function Watchlist({
   const query = searchParams.query;
   let movies: Movie[] = [];
   if (query) {
-    // search
     const res = await fetch(
       `https://api.themoviedb.org/3/search/movie?query=${query}&sort_by=primary_release_date.asc&include_adult=false&language=en-US&page=1&api_key=18bbc44d1e9834345fa7cd8f22c77cee&page=1`
     );
+
     const data: MovieResults = await res.json();
     movies = data.results;
   }

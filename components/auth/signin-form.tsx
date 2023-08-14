@@ -7,7 +7,6 @@ import { buttonVariants } from "../ui/button";
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { useFormik } from "formik";
-import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 export default function SignInForm({
   className,

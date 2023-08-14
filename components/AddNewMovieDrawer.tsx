@@ -1,22 +1,63 @@
 "use client";
-
 import { Drawer } from "vaul";
 import { Button } from "./ui/button";
-import Link from "next/link";
 import { PlusIcon } from "@radix-ui/react-icons";
-import { Label } from "./ui/label";
+import { FormEvent, useEffect, useState } from "react";
 import { Input } from "./ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
+import MovieCard from "./MovieCard";
+import type { ModifiedTitle } from "@/types/titles";
+import TitleCard from "./TitleCard";
+import * as RadioGroup from "@radix-ui/react-radio-group";
+import { Switch } from "./ui/switch";
+import { Label } from "./ui/label";
+import { Card } from "./ui/card";
 
 export function AddMovieDrawer() {
+  const [selectedTitleId, setSelectedTitleId] = useState<string | null>(null);
+  const [selectedTitle, setSelectedTitle] = useState<ModifiedTitle | null>(
+    null
+  );
+  const [notFound, setNotFound] = useState<boolean>(false);
+  const [titles, setTitles] = useState<ModifiedTitle[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [query, setQuery] = useState<String>("");
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      setNotFound(false);
+      const data = await fetch("/api/titles", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({ query }),
+      });
+      const results = await data.json();
+      setTitles(results.results);
+      if (results.results.length === 0) setNotFound(true);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function handleTitleChange({ value }: { value: string }) {
+    const title = titles.find((title) => title.id === parseInt(value));
+    setSelectedTitle(title ?? null);
+  }
+  // useEffect(() => {
+  //   if (selectedTitleId) {
+  //     const title = titles.find(
+  //       (title) => title.id === parseInt(selectedTitleId)
+  //     );
+  //     setSelectedTitle(title ?? null);
+  //   }
+  // }, [selectedTitleId, titles]);
+
   return (
     <Drawer.Root shouldScaleBackground>
       <Drawer.Trigger asChild>
@@ -32,94 +73,175 @@ export function AddMovieDrawer() {
             <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-muted-foreground/70 mb-8" />
             <div className="max-w-md mx-auto">
               <Drawer.Title className="mb-4 text-2xl font-medium">
-                Go ahead, add a movie!
+                Go ahead, add a something!
               </Drawer.Title>
+              <Drawer.NestedRoot>
+                {selectedTitle ? (
+                  <div className="flex flex-col py-4">
+                    <Drawer.Trigger>
+                      <TitleCard title={selectedTitle} single />
+                    </Drawer.Trigger>
+                    <Card className="w-full px-3 py-4 m-4 mx-auto space-y-3">
+                      <div className="grid w-full grid-cols-2">
+                        <div className="flex items-center space-x-3">
+                          <Switch id="watched" />
+                          <Label htmlFor="watched">Watched</Label>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <Switch id="favourite" />
+                          <Label htmlFor="favourite">Favourite</Label>
+                        </div>
+                      </div>
+                      <div className="grid w-full grid-cols-2 pt-3">
+                        <div className="flex items-center space-x-3">
+                          <Label htmlFor="rating">Rating</Label>
+                          <Input
+                            id="rating"
+                            type="number"
+                            min={1}
+                            max={10}
+                            className="h-8 w-14"
+                            placeholder="7.5"
+                          />
+                        </div>
+                        <Button className="text-center w-fit" size={"sm"}>
+                          Add to watchlist
+                        </Button>
+                      </div>
+                    </Card>
+                  </div>
+                ) : (
+                  <>
+                    <Drawer.Trigger className="h-[150px] flex items-center flex-col  space-y-2 justify-center border-dotted border-[3px] text-xl py-2 rounded-md overflow-hidden shadow-sm w-full my-2">
+                      <p className="text-muted-foreground">
+                        Search and select a title to add.
+                      </p>
+                      <PlusIcon className="w-8 h-8 text-muted-foreground" />
+                    </Drawer.Trigger>
+                  </>
+                )}
 
-              <form className="grid space-y-2">
-                <div className="flex flex-col space-y-1">
-                  <Label className="text-[1.1rem]" htmlFor="title">
-                    Title
-                  </Label>
-                  <Input
-                    type="text"
-                    name="title"
-                    id="title"
-                    placeholder="The Batman (2022)"
-                  />
-                </div>
-                <Select>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select a category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Categories</SelectLabel>
-                        <SelectItem value="action">Action</SelectItem>
-                        <SelectItem value="adventure">Adventure</SelectItem>
-                        <SelectItem value="animation">Animation</SelectItem>
-                        <SelectItem value="comedy">Comedy</SelectItem>
-                        <SelectItem value="crime">Crime</SelectItem>
-                        <SelectItem value="thriller">Thriller</SelectItem>
-                        <SelectItem value="documentary">Documentary</SelectItem>
-                        <SelectItem value="drama">Drama</SelectItem>
-                        <SelectItem value="family">Family</SelectItem>
-                        <SelectItem value="fantasy">Fantasy</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </form>
+                <Drawer.Portal>
+                  <Drawer.Overlay className="fixed inset-0 z-[60] bg-black/40" />
+                  <Drawer.Content className="bg-popover z-[60] flex flex-col rounded-t-[10px] h-full mt-24 max-h-[94%] fixed bottom-0 left-0 right-0">
+                    <div className="p-4 bg-popover rounded-t-[10px] flex-1">
+                      <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-300 mb-8" />
+                      <div className="max-w-md mx-auto">
+                        <Drawer.Title className="mb-4 text-2xl font-medium">
+                          Search and select a title to add.
+                        </Drawer.Title>
+                        <form
+                          className="w-full px-2 mt-2"
+                          onSubmit={handleSubmit}
+                        >
+                          <div className="flex items-center gap-2">
+                            <Input
+                              value={query as string}
+                              onChange={(e) => setQuery(e.target.value)}
+                              required
+                              name="query"
+                              id="query"
+                              placeholder="The Batman 2022"
+                              type="text"
+                            />
+                            <Button
+                              className="w-14"
+                              size={"icon"}
+                              variant={"secondary"}
+                              type="submit"
+                            >
+                              {loading ? (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  className="w-5 h-5 animate-spin"
+                                >
+                                  <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                                </svg>
+                              ) : (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  className="w-5 h-5"
+                                >
+                                  <circle cx="11" cy="11" r="8" />
+                                  <path d="m21 21-4.3-4.3" />
+                                </svg>
+                              )}
+                            </Button>
+                          </div>
+                        </form>
+                      </div>
+                      <ScrollArea className="flex w-full flex-col h-[600px] pb-8 px-2 pr-3 my-4">
+                        <ScrollBar />
+                        <form className="w-full">
+                          {!loading && titles.length >= 1 ? (
+                            <RadioGroup.Root
+                              className="flex flex-col pb-8 space-y-3"
+                              value={selectedTitleId as unknown as string}
+                              onValueChange={(value) => {
+                                setSelectedTitleId(value);
+                                handleTitleChange({ value });
+                              }}
+                            >
+                              <>
+                                {titles.map((title: ModifiedTitle) => {
+                                  if (title.poster_path) {
+                                    return (
+                                      <>
+                                        <TitleCard
+                                          title={title}
+                                          key={title.id}
+                                        />
+                                      </>
+                                    );
+                                  }
+                                })}
+                              </>
+                            </RadioGroup.Root>
+                          ) : loading ? (
+                            <>
+                              <div className="flex flex-col w-full space-y-3">
+                                {[...Array(9)].map((_, idx) => (
+                                  <TitleCard key={idx} skelaton />
+                                ))}
+                              </div>
+                            </>
+                          ) : notFound ? (
+                            <div className="flex justify-center py-8">
+                              <p className="text-muted-foreground">
+                                No results found.
+                              </p>
+                            </div>
+                          ) : (
+                            <div className="flex justify-center py-8">
+                              <p className="text-muted-foreground">
+                                Search results will appear here.
+                              </p>
+                            </div>
+                          )}
+                        </form>
+                      </ScrollArea>
+                    </div>
+                  </Drawer.Content>
+                </Drawer.Portal>
+              </Drawer.NestedRoot>
             </div>
           </div>
-          {/* <div className="p-4 mt-auto border-t bg-zinc-100 border-zinc-200">text-muted-foreground
-            <div className="flex justify-end max-w-md gap-6 mx-auto">
-              <a
-                className="text-xs text-zinc-600 flex items-center gap-0.25"
-                href="https://github.com/emilkowalski/vaul"
-                target="_blank"
-              >
-                GitHub
-                <svg
-                  fill="none"
-                  height="16"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="16"
-                  aria-hidden="true"
-                  className="w-3 h-3 ml-1"
-                >
-                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
-                  <path d="M15 3h6v6"></path>
-                  <path d="M10 14L21 3"></path>
-                </svg>
-              </a>
-              <a
-                className="text-xs text-zinc-600 flex items-center gap-0.25"
-                href="https://twitter.com/emilkowalski_"
-                target="_blank"
-              >
-                Twitter
-                <svg
-                  fill="none"
-                  height="16"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="16"
-                  aria-hidden="true"
-                  className="w-3 h-3 ml-1"
-                >
-                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
-                  <path d="M15 3h6v6"></path>
-                  <path d="M10 14L21 3"></path>
-                </svg>
-              </a>
-            </div>
-          </div> */}
         </Drawer.Content>
       </Drawer.Portal>
     </Drawer.Root>

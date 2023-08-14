@@ -35,14 +35,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String      @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?     @unique
   emailVerified DateTime?
   password      String?
   image         String?
   accounts      Account[]
   sessions      Session[]
+  watchlist     Usertitle[]
 }
 
 model VerificationToken {
@@ -51,4 +52,28 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model title {
+  id            Int         @id
+  title         String
+  type          String
+  released      DateTime?
+  vote_average  Float?
+  genres        String      @db.Text
+  overview      String      @db.Text
+  poster_path   String?
+  backdrop_path String?
+  users         Usertitle[]
+}
+
+model Usertitle {
+  id         String  @id @default(cuid())
+  isWatched  Boolean
+  isFavorite Boolean
+  rating     Int?
+  userId     String
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title      title?  @relation(fields: [titleId], references: [id])
+  titleId    Int?
 }

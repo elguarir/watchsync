@@ -12,7 +12,6 @@ main.py
 # next.js
 /.next/
 /out/
-
 # production
 /build
 

@@ -21,6 +21,7 @@ export default function SignOutButton() {
               style: {
                 minWidth: "250px",
               },
+              className: "dark:bg-muted dark:text-orange-50",
               position: "bottom-center",
             }
           );

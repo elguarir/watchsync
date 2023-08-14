@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Input } from "./ui/input";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
@@ -12,6 +12,7 @@ export default function MoviesSearch() {
     if (query === "") return;
     e.preventDefault();
     router.push(`/dashboard/movies?query=${query}`);
+    
   };
 
   return (
@@ -30,7 +31,7 @@ export default function MoviesSearch() {
           placeholder="Search for movies, tv shows"
           type="text"
         />
-        <Button size={"icon"} variant={"outline"} className="w-12">
+        <Button variant={"outline"} className="flex items-center gap-1 w-fit">
           <svg
             className="w-4 h-4"
             xmlns="http://www.w3.org/2000/svg"
@@ -53,6 +54,7 @@ export default function MoviesSearch() {
               strokeWidth="1.5"
             />
           </svg>
+          Search
         </Button>
       </form>
     </div>
