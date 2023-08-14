@@ -70,26 +70,26 @@ const bespoke = localFont({
 //   variable: "--font-general",
 // });
 
-const generalsans = localFont({
-  src: [
-    {
-      path: "./fonts/GeneralSans/GeneralSans-Regular.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "./fonts/GeneralSans/GeneralSans-Medium.woff2",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "./fonts/GeneralSans/GeneralSans-SemiBold.woff2",
-      weight: "600",
-      style: "normal",
-    },
-  ],
-  variable: "--font-general",
-});
+// const generalsans = localFont({
+//   src: [
+//     {
+//       path: "./fonts/GeneralSans/GeneralSans-Regular.woff2",
+//       weight: "400",
+//       style: "normal",
+//     },
+//     {
+//       path: "./fonts/GeneralSans/GeneralSans-Medium.woff2",
+//       weight: "500",
+//       style: "normal",
+//     },
+//     {
+//       path: "./fonts/GeneralSans/GeneralSans-SemiBold.woff2",
+//       weight: "600",
+//       style: "normal",
+//     },
+//   ],
+//   variable: "--font-general",
+// });
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -122,7 +122,7 @@ export default function RootLayout({
           bespoke.variable,
           // clash.variable,
           inter.className,
-          generalsans.variable
+          // generalsans.variable
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
