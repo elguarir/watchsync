@@ -34,9 +34,9 @@ export default async function Watchlist() {
     },
     orderBy: {
       createdAt: "desc",
-    }
+    },
   });
- 
+
   return (
     <div className="flex flex-col pb-12">
       <div className="flex items-center justify-between">
@@ -59,6 +59,7 @@ export default async function Watchlist() {
         >
           {watchlist.map((item) => (
             <WatchListCard
+              key={item.title.id}
               isFavourite={item.isFavourite}
               isWatched={item.isWatched}
               rating={item.rating}

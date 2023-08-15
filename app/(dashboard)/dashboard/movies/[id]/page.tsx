@@ -52,8 +52,8 @@ export default async function MoviePage({
             </div>
             <p className="text-sm">{movie?.overview}</p>
             <div className="flex flex-wrap items-center gap-2 mt-1">
-              {movie.genres.map((genre) => (
-                <Badge className="text-xs" variant={"outline"}>
+              {movie.genres.map((genre, idx) => (
+                <Badge key={idx} className="text-xs" variant={"outline"}>
                   {genre.name}
                 </Badge>
               ))}

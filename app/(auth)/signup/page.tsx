@@ -4,6 +4,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import SignUpForm from "@/components/auth/signup-form";
+import Image from "next/image";
 // import Illustration from "@/public/images/registration-illustration.svg";
 export const metadata: Metadata = {
   title: "Login",
@@ -23,7 +24,7 @@ export default function LoginPage() {
         Login
       </Link>
       <div className="items-center justify-center hidden h-full bg-muted lg:flex">
-        <img
+        <Image
           src="images/registration-illustration.svg"
           alt="Registration Illustration"
           className="w-[28rem] 2xl:w-[36rem]"

@@ -66,42 +66,55 @@ const WatchListCard = ({
 
   const [watched, setWatched] = useState(isWatched ?? false);
   const [favourite, setFavourite] = useState(isFavourite ?? false);
-  // const res = await fetch("/api/users/watchlist/add", {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-type": "application/json",
-  //   },
-  //   body: JSON.stringify({
-  //     titleId: selectedTitle?.id,
-  //     type: selectedTitle?.type,
-  //     isWatched: watched,
-  //     isFavourite: favourite,
-  //     rating,
-  //   }),
-  // });
-  const handleFavourite = async () => {
-    const res = await fetch("/api/users/watchlist/add", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        titleId: title?.id,
-        type: title?.type,
-        isWatched: watched,
-        rating,
-        isFavourite: !favourite,
-      }),
-    });
-    if (res.ok) {
-      setFavourite(!favourite);
-      toast.success(
-        `${!favourite ? "Added to" : "Removed from"} favourites list`
-      );
+
+  function handleUpdate(action: "watched" | "favourite") {
+    // endpoint: /api/users/watchlist/update
+    // body eg : {
+    //     "titleId": 724209,
+    //     "isWatched": true,
+    //     "isFavourite": false,
+    //     "rating": 9.4
+    // }
+
+    if (action === "watched") {
+      fetch("/api/users/watchlist/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          titleId: title?.id,
+          isWatched: !watched,
+          isFavourite: favourite,
+          rating: rating,
+        }),
+      })
+        .then((res) => res.json())
+        .catch((err) => {
+          toast.error("Something went wrong");
+        });
+
+      setWatched(!watched);
     } else {
-      toast.error("Something went wrong");
+      fetch("/api/users/watchlist/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          titleId: title?.id,
+          isWatched: watched,
+          isFavourite: !favourite,
+          rating: rating,
+        }),
+      })
+        .then((res) => res.json())
+        .catch((err) => {
+          toast.error("Something went wrong");
+        });
+      setFavourite(!favourite);
     }
-  };
+  }
 
   return (
     <Card className="flex items-center gap-4 p-3 h-[200px]">
@@ -161,7 +174,7 @@ const WatchListCard = ({
         </div>
         <div className="flex items-center mt-3 space-x-2">
           <Button
-            onClick={() => {}}
+            onClick={() => handleUpdate("watched")}
             size={"sm"}
             variant={`${watched ? "success" : "outline"}`}
             className="flex items-center h-6 gap-[2px] text-sm"
@@ -170,7 +183,7 @@ const WatchListCard = ({
             <CheckIcon className="w-4 h-4" />
           </Button>
           <Button
-            onClick={handleFavourite}
+            onClick={() => handleUpdate("favourite")}
             size={"sm"}
             variant={`${favourite ? "red" : "outline"}`}
             className="flex items-center h-6 gap-[2.8px] text-sm"
