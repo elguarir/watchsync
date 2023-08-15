@@ -1,14 +1,44 @@
 import React from "react";
-import data from "./movies.json";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MovieResults } from "@/types/movies";
-import MovieCard from "@/components/MovieCard";
 import { AddMovieDrawer } from "@/components/AddNewMovieDrawer";
-const movies: MovieResults = data;
+import WatchListCard from "@/components/WatchListCard";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import prisma from "@/lib/db";
 
-export default function Watchlist() {
+export default async function Watchlist() {
+  const session = await getServerSession(authOptions);
+  let user_id = null;
+  if (session) {
+    user_id = session.user.userId;
+  }
+  const watchlist = await prisma.usertitle.findMany({
+    where: { userId: user_id },
+    select: {
+      isFavourite: true,
+      isWatched: true,
+      rating: true,
+      title: {
+        select: {
+          id: true,
+          title: true,
+          type: true,
+          released: true,
+          vote_average: true,
+          genres: true,
+          overview: true,
+          poster_path: true,
+          backdrop_path: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    }
+  });
+ 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col pb-12">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-medium tracking-wide font-general">
           Your watchlist
@@ -27,8 +57,13 @@ export default function Watchlist() {
           value="all"
           className="pt-4 max-md:flex max-md:flex-col max-md:space-y-3 md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-4"
         >
-          {movies.results.map((movie) => (
-            <MovieCard movie={movie} key={movie.id} />
+          {watchlist.map((item) => (
+            <WatchListCard
+              isFavourite={item.isFavourite}
+              isWatched={item.isWatched}
+              rating={item.rating}
+              title={item.title}
+            />
           ))}
         </TabsContent>
       </Tabs>

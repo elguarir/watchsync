@@ -54,7 +54,7 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model title {
+model Title {
   id            Int         @id
   title         String
   type          String
@@ -64,16 +64,20 @@ model title {
   overview      String      @db.Text
   poster_path   String?
   backdrop_path String?
-  users         Usertitle[]
+  usertitles    Usertitle[]
 }
 
 model Usertitle {
-  id         String  @id @default(cuid())
-  isWatched  Boolean
-  isFavorite Boolean
-  rating     Int?
-  userId     String
-  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  title      title?  @relation(fields: [titleId], references: [id])
-  titleId    Int?
+  id          Int      @id @default(autoincrement())
+  isWatched   Boolean
+  isFavourite Boolean
+  rating      Int?
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       Title    @relation(fields: [titleId], references: [id])
+  titleId     Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, titleId])
 }

@@ -129,7 +129,7 @@ const TitleCard = ({
   const id = title?.id;
   return (
     <RadioGroup.Item value={id as unknown as string} className="w-full" asChild>
-      <Card className="flex ring-2 ring-inset transition-all duration-200 ring-transparent data-[state=checked]:ring-ring data-[state=checked]:ring-2 items-center h-auto gap-4 px-3">
+      <Card className="flex ring-[2.5px] ring-inset transition-all duration-200 ring-transparent data-[state=checked]:ring-ring data-[state=checked]:ring-[2.5px] items-center h-auto gap-4 px-3">
         <div className="h-auto py-2 w-[105px] shadow-sm">
           {title?.poster_path ? (
             <Image

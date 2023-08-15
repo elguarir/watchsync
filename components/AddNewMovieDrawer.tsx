@@ -5,24 +5,29 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import { FormEvent, useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
-import MovieCard from "./MovieCard";
 import type { ModifiedTitle } from "@/types/titles";
 import TitleCard from "./TitleCard";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
 import { Card } from "./ui/card";
-
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 export function AddMovieDrawer() {
   const [selectedTitleId, setSelectedTitleId] = useState<string | null>(null);
   const [selectedTitle, setSelectedTitle] = useState<ModifiedTitle | null>(
     null
   );
+  const [watched, setWatched] = useState<boolean>(false);
+  const [favourite, setFavourite] = useState<boolean>(false);
   const [notFound, setNotFound] = useState<boolean>(false);
   const [titles, setTitles] = useState<ModifiedTitle[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [query, setQuery] = useState<String>("");
-
+  const [rating, setRating] = useState<number | null>(null);
+  const router = useRouter();
+  
+  
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setLoading(true);
@@ -49,15 +54,33 @@ export function AddMovieDrawer() {
     const title = titles.find((title) => title.id === parseInt(value));
     setSelectedTitle(title ?? null);
   }
-  // useEffect(() => {
-  //   if (selectedTitleId) {
-  //     const title = titles.find(
-  //       (title) => title.id === parseInt(selectedTitleId)
-  //     );
-  //     setSelectedTitle(title ?? null);
-  //   }
-  // }, [selectedTitleId, titles]);
 
+
+  async function handleAddToWatchlist() {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/users/watchlist/add", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          titleId: selectedTitle?.id,
+          type: selectedTitle?.type,
+          isWatched: watched,
+          isFavourite: favourite,
+          rating,
+        }),
+      });
+      const data = await res.json();
+      toast.success("Added to watchlist!");
+      router.refresh()
+      router.push('/dashboard/watchlist')
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+    setLoading(false);
+  }
   return (
     <Drawer.Root shouldScaleBackground>
       <Drawer.Trigger asChild>
@@ -84,11 +107,19 @@ export function AddMovieDrawer() {
                     <Card className="w-full px-3 py-4 m-4 mx-auto space-y-3">
                       <div className="grid w-full grid-cols-2">
                         <div className="flex items-center space-x-3">
-                          <Switch id="watched" />
+                          <Switch
+                            id="watched"
+                            checked={watched}
+                            onCheckedChange={(checked) => setWatched(checked)}
+                          />
                           <Label htmlFor="watched">Watched</Label>
                         </div>
                         <div className="flex items-center space-x-3">
-                          <Switch id="favourite" />
+                          <Switch
+                            id="favourite"
+                            checked={favourite}
+                            onCheckedChange={(checked) => setFavourite(checked)}
+                          />
                           <Label htmlFor="favourite">Favourite</Label>
                         </div>
                       </div>
@@ -98,14 +129,45 @@ export function AddMovieDrawer() {
                           <Input
                             id="rating"
                             type="number"
+                            value={rating !== null ? rating.toString() : ""}
+                            onChange={(e) => {
+                              const value = parseInt(e.target.value);
+                              setRating(isNaN(value) ? null : value);
+                            }}
+                            name="rating"
                             min={1}
                             max={10}
-                            className="h-8 w-14"
+                            className="w-16 h-8"
                             placeholder="7.5"
                           />
                         </div>
-                        <Button className="text-center w-fit" size={"sm"}>
-                          Add to watchlist
+                        <Button
+                          className="text-center min-w-[132.875px] w-fit"
+                          size={"sm"}
+                          onClick={handleAddToWatchlist}
+                          disabled={loading}
+                        >
+                          {loading ? (
+                            <>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="w-4 h-4 mr-2 animate-spin"
+                              >
+                                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                              </svg>
+                              Saving...
+                            </>
+                          ) : (
+                            "Add to watchlist"
+                          )}
                         </Button>
                       </div>
                     </Card>
@@ -125,7 +187,7 @@ export function AddMovieDrawer() {
                   <Drawer.Overlay className="fixed inset-0 z-[60] bg-black/40" />
                   <Drawer.Content className="bg-popover z-[60] flex flex-col rounded-t-[10px] h-full mt-24 max-h-[94%] fixed bottom-0 left-0 right-0">
                     <div className="p-4 bg-popover rounded-t-[10px] flex-1">
-                      <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-300 mb-8" />
+                      <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-muted-foreground/70 mb-8" />
                       <div className="max-w-md mx-auto">
                         <Drawer.Title className="mb-4 text-2xl font-medium">
                           Search and select a title to add.
@@ -186,7 +248,7 @@ export function AddMovieDrawer() {
                           </div>
                         </form>
                       </div>
-                      <ScrollArea className="flex w-full flex-col h-[600px] pb-8 px-2 pr-3 my-4">
+                      <ScrollArea className="flex w-full max-w-md mx-auto flex-col h-[600px] pb-8 px-2 pr-3 my-4">
                         <ScrollBar />
                         <form className="w-full">
                           {!loading && titles.length >= 1 ? (

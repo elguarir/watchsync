@@ -91,7 +91,25 @@ const bespoke = localFont({
 //   variable: "--font-general",
 // });
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  fallback: [
+    "ui-sans-serif",
+    "system-ui",
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "Segoe UI",
+    "sans-serif",
+    "Roboto",
+    "Helvetica Neue",
+    "Arial",
+    "Noto Sans",
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji",
+  ],
+});
 
 export const metadata: Metadata = {
   title: {
@@ -121,7 +139,7 @@ export default function RootLayout({
         className={cn(
           bespoke.variable,
           // clash.variable,
-          inter.className,
+          inter.className
           // generalsans.variable
         )}
       >

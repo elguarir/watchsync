@@ -29,9 +29,9 @@ export interface ModifiedTitle {
   id: number;
   title: string;
   type: string;
-  released: string;
+  released: Date | null;
   vote_average: number | null;
-  genres: string | null;
+  genres: string;
   overview: string;
   poster_path: string | null;
   backdrop_path: string | null;

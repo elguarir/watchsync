@@ -64,3 +64,8 @@
   }
 }
 
+
+* {
+  /* transparent tap */
+  -webkit-tap-highlight-color: transparent;
+}
