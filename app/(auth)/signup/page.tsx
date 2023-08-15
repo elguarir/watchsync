@@ -25,6 +25,8 @@ export default function LoginPage() {
       </Link>
       <div className="items-center justify-center hidden h-full bg-muted lg:flex">
         <Image
+        width={448}
+        height={448}
           src="images/registration-illustration.svg"
           alt="Registration Illustration"
           className="w-[28rem] 2xl:w-[36rem]"
