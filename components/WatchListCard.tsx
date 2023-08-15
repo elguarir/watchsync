@@ -30,7 +30,7 @@ const WatchListCard = ({
   isWatched,
   rating,
 }: {
-  title: TitleProp;
+  title?: TitleProp;
   skelaton?: boolean;
   isFavourite?: boolean;
   isWatched?: boolean;
@@ -130,7 +130,7 @@ const WatchListCard = ({
         <p className="text-sm line-clamp-3">{title?.overview}</p>
         <div className="flex items-center mt-1 space-x-2">
           <Badge className="text-xs" variant={"outline"}>
-            {title.type}
+            {title?.type}
           </Badge>
           {rating && (
             <Badge
