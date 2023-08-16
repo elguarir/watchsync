@@ -248,7 +248,7 @@ export function AddMovieDrawer() {
                           </div>
                         </form>
                       </div>
-                      <ScrollArea className="flex w-full max-w-md mx-auto flex-col h-[600px] pb-8 px-2 pr-3 my-4">
+                      <ScrollArea className="flex w-full max-w-md mx-auto flex-col h-[724px] pb-8 px-2 pr-3 my-4">
                         <ScrollBar />
                         <form className="w-full">
                           {!loading && titles.length >= 1 ? (
