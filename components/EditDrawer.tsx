@@ -68,7 +68,7 @@ export function EditDrawer({
         >
           <svg
             version="1.1"
-            className="w-4 h-4 transition-transform duration-300"
+            className="w-4 h-4"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"

@@ -2,7 +2,7 @@
 import { Drawer } from "vaul";
 import { Button } from "./ui/button";
 import { PlusIcon } from "@radix-ui/react-icons";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { Input } from "./ui/input";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import type { ModifiedTitle } from "@/types/titles";
@@ -13,6 +13,9 @@ import { Label } from "./ui/label";
 import { Card } from "./ui/card";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+
+
+
 export function AddMovieDrawer() {
   const [selectedTitleId, setSelectedTitleId] = useState<string | null>(null);
   const [selectedTitle, setSelectedTitle] = useState<ModifiedTitle | null>(

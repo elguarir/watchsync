@@ -2,8 +2,8 @@ import * as React from "react";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
-import { NotionLogoIcon } from "@radix-ui/react-icons";
 import { siteConfig } from "@/config/site";
+import LogoIcon from "./logo/icon";
 
 export function MainNav() {
   const items = [
@@ -28,7 +28,7 @@ export function MainNav() {
   return (
     <div className="flex gap-6 md:gap-10">
       <Link href="/" className="flex items-center space-x-2">
-        <NotionLogoIcon className="w-6 h-6 fill-current" />
+        <LogoIcon />
         <span className="inline-block font-bold">{siteConfig.name}</span>
       </Link>
       {items?.length ? (
