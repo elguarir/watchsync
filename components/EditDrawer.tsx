@@ -45,7 +45,7 @@ export function EditDrawer({
       }),
     })
       .then(() => {
-        toast.success("Updated!");
+        toast.success("Saved!");
         router.refresh();
         setOpen(false);
       })
@@ -168,7 +168,7 @@ export function EditDrawer({
                           Saving...
                         </>
                       ) : (
-                        "Add to watchlist"
+                        "Save"
                       )}
                     </Button>
                   </div>
