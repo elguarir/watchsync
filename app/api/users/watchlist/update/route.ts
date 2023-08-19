@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import prisma from "@/lib/db";
+import { revalidatePath } from "next/cache";
 
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -36,6 +37,6 @@ export async function POST(request: NextRequest) {
       updatedAt: true,
     },
   });
+  revalidatePath("/dashboard/watchlist");
   return NextResponse.json({ success: true, data: result });
 }
-

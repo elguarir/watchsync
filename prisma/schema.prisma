@@ -71,7 +71,7 @@ model Usertitle {
   id          Int      @id @default(autoincrement())
   isWatched   Boolean
   isFavourite Boolean
-  rating      Int?
+  rating      Float?
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   title       Title    @relation(fields: [titleId], references: [id])

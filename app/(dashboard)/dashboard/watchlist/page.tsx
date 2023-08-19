@@ -55,7 +55,7 @@ export default async function Watchlist() {
 
         <TabsContent
           value="all"
-          className="pt-4 max-md:flex max-md:flex-col max-md:space-y-3 md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-4"
+          className="pt-4 max-md:flex max-md:flex-col max-md:space-y-3 md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-4 data-[state=inactive]:hidden transition"
         >
           {watchlist.map((item) => (
             <WatchListCard
@@ -66,6 +66,39 @@ export default async function Watchlist() {
               title={item.title}
             />
           ))}
+        </TabsContent>
+        <TabsContent
+          value="watched"
+          className="pt-4 max-md:flex max-md:flex-col max-md:space-y-3 md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-4 data-[state=inactive]:hidden transition"
+        >
+          {watchlist
+            .filter((item) => item.isWatched)
+            .map((item) => (
+              <WatchListCard
+                key={item.title.id}
+                isFavourite={item.isFavourite}
+                isWatched={item.isWatched}
+                rating={item.rating}
+                title={item.title}
+              />
+            ))}
+        </TabsContent>
+
+        <TabsContent
+          value="favourites"
+          className="pt-4 max-md:flex max-md:flex-col max-md:space-y-3 md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-4 data-[state=inactive]:hidden transition"
+        >
+          {watchlist
+            .filter((item) => item.isFavourite)
+            .map((item) => (
+              <WatchListCard
+                key={item.title.id}
+                isFavourite={item.isFavourite}
+                isWatched={item.isWatched}
+                rating={item.rating}
+                title={item.title}
+              />
+            ))}
         </TabsContent>
       </Tabs>
     </div>

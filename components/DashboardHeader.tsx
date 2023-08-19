@@ -1,6 +1,6 @@
+"use client";
 import React from "react";
 import { RxDashboard } from "react-icons/rx";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,13 +9,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuSub,
   DropdownMenuTrigger,
+  DropdownMenuPortal,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import SignOutButton from "@/components/auth/SignOutButton";
+import { MoonIcon } from "@radix-ui/react-icons";
+import { useTheme } from "next-themes";
 
 export default function DashboardHeader({ session, initials }: any) {
+  const { setTheme } = useTheme();
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="flex items-center justify-between h-16 px-4 space-x-4 md:container">
@@ -272,25 +278,40 @@ export default function DashboardHeader({ session, initials }: any) {
                   <span>Movies</span>
                 </Link>
               </DropdownMenuItem>
-              {/* 
-              <DropdownMenuItem asChild>
-                <Link href="/bookmarks" className="cursor-pointer">
-                  <svg
-                    className="w-[1.1rem] h-[1.1rem] mr-2 fill-foreground"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M4 7C4 4.23858 6.23858 2 9 2H14.9999C17.7614 2 19.9999 4.23858 19.9999 7V18.9892C19.9999 21.5429 17.0126 22.9289 15.0627 21.2799L12.6457 19.2358C12.273 18.9205 11.727 18.9205 11.3542 19.2358L8.93724 21.2799C6.98734 22.9289 4 21.543 4 18.9892V7ZM9 4C7.34315 4 6 5.34315 6 7V18.9892C6 19.8405 6.99578 20.3025 7.64575 19.7528L10.0628 17.7087C11.1811 16.7629 12.8189 16.7629 13.9372 17.7087L16.3542 19.7528C17.0042 20.3024 17.9999 19.8405 17.9999 18.9892V7C17.9999 5.34315 16.6568 4 14.9999 4H9Z"
-                    />
-                  </svg>
-
-                  <span>Bookmarks</span>
-                </Link>
-              </DropdownMenuItem> */}
             </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            {/* theme toggle */}
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>
+                <svg
+                  viewBox="0 0 15 15"
+                  className="h-[1rem] mr-2 w-[1rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.5 0C7.77614 0 8 0.223858 8 0.5V2.5C8 2.77614 7.77614 3 7.5 3C7.22386 3 7 2.77614 7 2.5V0.5C7 0.223858 7.22386 0 7.5 0ZM2.1967 2.1967C2.39196 2.00144 2.70854 2.00144 2.90381 2.1967L4.31802 3.61091C4.51328 3.80617 4.51328 4.12276 4.31802 4.31802C4.12276 4.51328 3.80617 4.51328 3.61091 4.31802L2.1967 2.90381C2.00144 2.70854 2.00144 2.39196 2.1967 2.1967ZM0.5 7C0.223858 7 0 7.22386 0 7.5C0 7.77614 0.223858 8 0.5 8H2.5C2.77614 8 3 7.77614 3 7.5C3 7.22386 2.77614 7 2.5 7H0.5ZM2.1967 12.8033C2.00144 12.608 2.00144 12.2915 2.1967 12.0962L3.61091 10.682C3.80617 10.4867 4.12276 10.4867 4.31802 10.682C4.51328 10.8772 4.51328 11.1938 4.31802 11.3891L2.90381 12.8033C2.70854 12.9986 2.39196 12.9986 2.1967 12.8033ZM12.5 7C12.2239 7 12 7.22386 12 7.5C12 7.77614 12.2239 8 12.5 8H14.5C14.7761 8 15 7.77614 15 7.5C15 7.22386 14.7761 7 14.5 7H12.5ZM10.682 4.31802C10.4867 4.12276 10.4867 3.80617 10.682 3.61091L12.0962 2.1967C12.2915 2.00144 12.608 2.00144 12.8033 2.1967C12.9986 2.39196 12.9986 2.70854 12.8033 2.90381L11.3891 4.31802C11.1938 4.51328 10.8772 4.51328 10.682 4.31802ZM8 12.5C8 12.2239 7.77614 12 7.5 12C7.22386 12 7 12.2239 7 12.5V14.5C7 14.7761 7.22386 15 7.5 15C7.77614 15 8 14.7761 8 14.5V12.5ZM10.682 10.682C10.8772 10.4867 11.1938 10.4867 11.3891 10.682L12.8033 12.0962C12.9986 12.2915 12.9986 12.608 12.8033 12.8033C12.608 12.9986 12.2915 12.9986 12.0962 12.8033L10.682 11.3891C10.4867 11.1938 10.4867 10.8772 10.682 10.682ZM5.5 7.5C5.5 6.39543 6.39543 5.5 7.5 5.5C8.60457 5.5 9.5 6.39543 9.5 7.5C9.5 8.60457 8.60457 9.5 7.5 9.5C6.39543 9.5 5.5 8.60457 5.5 7.5ZM7.5 4.5C5.84315 4.5 4.5 5.84315 4.5 7.5C4.5 9.15685 5.84315 10.5 7.5 10.5C9.15685 10.5 10.5 9.15685 10.5 7.5C10.5 5.84315 9.15685 4.5 7.5 4.5Z"
+                    fill="currentColor"
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+
+                <MoonIcon className="absolute h-[1rem] mr-2 w-[1rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span>Appearence</span>
+              </DropdownMenuSubTrigger>
+              <DropdownMenuSubContent className="mr-1">
+                <DropdownMenuItem onClick={() => setTheme("light")}>
+                  Light
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                  Dark
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("system")}>
+                  System
+                </DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
             <DropdownMenuSeparator />
             <SignOutButton />
           </DropdownMenuContent>

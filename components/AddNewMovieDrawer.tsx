@@ -131,7 +131,7 @@ export function AddMovieDrawer() {
                             type="number"
                             value={rating !== null ? rating.toString() : ""}
                             onChange={(e) => {
-                              const value = parseInt(e.target.value);
+                              const value = parseFloat(e.target.value);
                               setRating(isNaN(value) ? null : value);
                             }}
                             name="rating"

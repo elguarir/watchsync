@@ -9,7 +9,8 @@ export async function POST(request: NextRequest) {
   if (!session) {
     return NextResponse.json({ status: "Unauthorized" }, { status: 401 });
   }
-  const { query } = await request.json();
+  let { query } = await request.json();
+  query = encodeURIComponent(query);
   const data = await fetch(
     `https://api.themoviedb.org/3/search/multi?query=${query}&include_adult=false&language=en-US&page=1&api_key=18bbc44d1e9834345fa7cd8f22c77cee`
   );
