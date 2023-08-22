@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 import { Label } from "../ui/label";
@@ -8,6 +8,10 @@ import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
+
+
+
+
 export default function SignInForm({
   className,
   error,
@@ -40,10 +44,14 @@ export default function SignInForm({
 
     onSubmit: async (values) => {
       setIsLoading(true);
-      await signIn("credentials", {
-        email: values.email,
-        password: values.password,
-      });
+      await signIn(
+        "credentials",
+        {
+          email: values.email,
+          password: values.password,
+        },
+        { callbackUrl: "/dashboard" }
+      );
       setIsLoading(false);
     },
   });

@@ -6,6 +6,7 @@ import { siteConfig } from "@/config/site";
 import localFont from "next/font/local";
 import { Toaster } from "react-hot-toast";
 import { cn } from "@/lib/utils";
+import SessionProviderWrapper from "@/providers/SessionProvider";
 
 const bespoke = localFont({
   src: [
@@ -143,10 +144,12 @@ export default function RootLayout({
           // generalsans.variable
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-          <Toaster />
-        </ThemeProvider>
+        <SessionProviderWrapper>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            {children}
+            <Toaster />
+          </ThemeProvider>
+        </SessionProviderWrapper>
       </body>
     </html>
   );

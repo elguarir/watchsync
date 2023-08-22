@@ -13,7 +13,7 @@ export default function Home() {
       <section className="pt-6 pb-8 space-y-6 md:pb-12 md:pt-10">
         <div className="flex w-full mx-auto max-w-[64rem] flex-col items-center gap-4 text-center">
           <a
-            className="px-3 py-1 text-xs font-medium min-w-max rounded-2xl bg-muted"
+            className="px-3 py-1 text-xs font-medium whitespace-nowrap min-w-max rounded-2xl bg-muted"
             target="_blank"
             href="https://twitter.com/watchsync"
           >

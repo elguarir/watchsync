@@ -2,13 +2,12 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { MainNav } from "@/components/main-nav";
 import MobileNav from "./MobileNav";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
 import { Separator } from "./ui/separator";
 import { ModeToggle } from "./theme-toggler";
+import { useAuthSession } from "@/lib/hooks/useAuthSession";
 
 export async function SiteHeader() {
-  const session = await getServerSession(authOptions);
+  const session = await useAuthSession();
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="flex items-center justify-between h-16 px-4 space-x-4 md:container">

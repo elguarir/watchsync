@@ -45,12 +45,19 @@ export function EditDrawer({
       }),
     })
       .then(() => {
-        toast.success("Saved!");
+        toast.success("Saved!", {
+          style: {
+            minWidth: "250px",
+          },
+          className: "dark:bg-muted dark:text-orange-50",
+        });
         router.refresh();
         setOpen(false);
       })
       .catch(() => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong", {
+          className: "dark:bg-muted dark:text-orange-50",
+        });
       })
       .finally(() => {
         setLoading(false);

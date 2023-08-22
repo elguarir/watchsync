@@ -1,6 +1,10 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import React from "react";
+
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "Track, Discover, and Rate Your Favorite Movies and TV Shows.",
+};
 
 export default function Dashboard() {
   return (

@@ -4,6 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/lib/db";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as any,
   session: {
@@ -57,8 +58,18 @@ export const authOptions: NextAuthOptions = {
         user: {
           ...session.user,
           userId: token.sub,
+          name: token.name,
+          email: token.email,
+          image: token.picture,
         },
       };
+    },
+    jwt({ token, trigger, session }) {
+      if (trigger === "update" && session?.name) {
+        token.name = session?.name;
+        token.picture = session?.image;
+      }
+      return token;
     },
   },
 };

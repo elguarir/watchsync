@@ -65,11 +65,10 @@ const WatchListCard = ({
     );
   }
 
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
-    router.refresh()
+    router.refresh();
   }, [router]);
-
 
   const [watched, setWatched] = useState(isWatched ?? false);
   const [favourite, setFavourite] = useState(isFavourite ?? false);
@@ -90,7 +89,9 @@ const WatchListCard = ({
       })
         .then((res) => res.json())
         .catch((err) => {
-          toast.error("Something went wrong");
+          toast.error("Something went wrong", {
+            className: "dark:bg-muted dark:text-orange-50",
+          });
         });
 
       setWatched(!watched);
@@ -109,7 +110,9 @@ const WatchListCard = ({
       })
         .then((res) => res.json())
         .catch((err) => {
-          toast.error("Something went wrong");
+          toast.error("Something went wrong", {
+            className: "dark:bg-muted dark:text-orange-50",
+          });
         });
       setFavourite(!favourite);
     }
@@ -213,7 +216,14 @@ const WatchListCard = ({
           </div>
         </div>
       </Card>
-      <EditDrawer isFavourite={favourite} setWatched={setWatched} setFavourite={setFavourite} isWatched={watched} title={title} rating={rating} />
+      <EditDrawer
+        isFavourite={favourite}
+        setWatched={setWatched}
+        setFavourite={setFavourite}
+        isWatched={watched}
+        title={title}
+        rating={rating}
+      />
     </div>
   );
 };

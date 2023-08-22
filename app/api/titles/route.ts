@@ -1,11 +1,10 @@
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import { TitleResults, Title } from "@/types/titles";
+import { useAuthSession } from "@/lib/hooks/useAuthSession";
 
 export async function POST(request: NextRequest) {
-  const session = getServerSession(authOptions);
+  const session = useAuthSession();
   if (!session) {
     return NextResponse.json({ status: "Unauthorized" }, { status: 401 });
   }

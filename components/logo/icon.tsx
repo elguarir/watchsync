@@ -25,8 +25,8 @@ export default function LogoIcon({
         fill="#F4F4F5"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M90.506 32.3292C96.1534 32.3292 100.732 36.9079 100.732 42.5553C100.732 48.2027 96.1534 52.7814 90.506 52.7814C84.8586 52.7814 80.2798 48.2027 80.2798 42.5553C80.2798 36.9079 84.8499 32.3292 90.506 32.3292Z"
         fill="#F4F4F5"
       />
@@ -39,9 +39,9 @@ export default function LogoIcon({
           y2="6.6813"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.04" stop-color="#F57F2D" />
-          <stop offset="0.5" stop-color="#E47225" />
-          <stop offset="0.91" stop-color="#EF452C" />
+          <stop offset="0.04" stopColor="#F57F2D" />
+          <stop offset="0.5" stopColor="#E47225" />
+          <stop offset="0.91" stopColor="#EF452C" />
         </linearGradient>
       </defs>
     </svg>

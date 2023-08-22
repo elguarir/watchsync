@@ -14,8 +14,6 @@ import { Card } from "./ui/card";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-
-
 export function AddMovieDrawer() {
   const [selectedTitleId, setSelectedTitleId] = useState<string | null>(null);
   const [selectedTitle, setSelectedTitle] = useState<ModifiedTitle | null>(
@@ -29,8 +27,7 @@ export function AddMovieDrawer() {
   const [query, setQuery] = useState<String>("");
   const [rating, setRating] = useState<number | null>(null);
   const router = useRouter();
-  
-  
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setLoading(true);
@@ -58,7 +55,6 @@ export function AddMovieDrawer() {
     setSelectedTitle(title ?? null);
   }
 
-
   async function handleAddToWatchlist() {
     setLoading(true);
     try {
@@ -76,11 +72,19 @@ export function AddMovieDrawer() {
         }),
       });
       const data = await res.json();
-      toast.success("Added to watchlist!");
-      router.refresh()
-      router.push('/dashboard/watchlist')
+      toast.success("Added to watchlist!", {
+        style: {
+          minWidth: "250px",
+        },
+        className: "dark:bg-muted dark:text-orange-50",
+        position: "bottom-center",
+      });
+      router.refresh();
+      router.push("/dashboard/watchlist");
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Something went wrong", {
+        className: "dark:bg-muted dark:text-orange-50",
+      });
     }
     setLoading(false);
   }

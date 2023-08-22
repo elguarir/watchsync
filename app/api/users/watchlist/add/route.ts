@@ -1,12 +1,13 @@
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
 import prisma from "@/lib/db";
 import type { ModifiedTitle } from "@/types/titles";
+import { useAuthSession } from "@/lib/hooks/useAuthSession";
 
 export async function POST(request: NextRequest) {
-  const session = await getServerSession(authOptions);
+  
+  
+  const session = await useAuthSession();
   if (!session)
     return NextResponse.json(
       { status: "error", message: "Unauthorized" },

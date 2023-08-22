@@ -1,5 +1,5 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { useAuthSession } from "@/lib/hooks/useAuthSession";
+
 import { redirect } from "next/navigation";
 import DashboardHeader from "@/components/DashboardHeader";
 interface DashboardLayoutProps {
@@ -9,7 +9,7 @@ interface DashboardLayoutProps {
 export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
-  const session: any = await getServerSession(authOptions);
+  const session: any = await useAuthSession()
   if (!session) {
     redirect("/login");
   }

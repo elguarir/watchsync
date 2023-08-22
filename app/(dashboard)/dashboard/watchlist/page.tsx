@@ -2,12 +2,18 @@ import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AddMovieDrawer } from "@/components/AddNewMovieDrawer";
 import WatchListCard from "@/components/WatchListCard";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { Metadata } from "next";
 import prisma from "@/lib/db";
+import { useAuthSession } from "@/lib/hooks/useAuthSession";
+
+
+export const metadata: Metadata = {
+  title: "Watchlist",
+  description: "Add movies and TV shows to your watchlist.",
+};
 
 export default async function Watchlist() {
-  const session = await getServerSession(authOptions);
+  const session = await useAuthSession()
   let user_id = null;
   if (session) {
     user_id = session.user.userId;

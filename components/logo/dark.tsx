@@ -44,9 +44,9 @@ export default function DarkLogo({
           y2="6.6813"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.04" stop-color="#F57F2D" />
-          <stop offset="0.5" stop-color="#E47225" />
-          <stop offset="0.91" stop-color="#EF452C" />
+          <stop offset="0.04" stopColor="#F57F2D" />
+          <stop offset="0.5" stopColor="#E47225" />
+          <stop offset="0.91" stopColor="#EF452C" />
         </linearGradient>
       </defs>
     </svg>
