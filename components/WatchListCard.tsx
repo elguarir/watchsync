@@ -65,10 +65,6 @@ const WatchListCard = ({
     );
   }
 
-  const router = useRouter();
-  useEffect(() => {
-    router.refresh();
-  }, [router]);
 
   const [watched, setWatched] = useState(isWatched ?? false);
   const [favourite, setFavourite] = useState(isFavourite ?? false);
