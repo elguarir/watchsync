@@ -7,7 +7,7 @@ import localFont from "next/font/local";
 import { Toaster } from "react-hot-toast";
 import { cn } from "@/lib/utils";
 import SessionProviderWrapper from "@/providers/SessionProvider";
-
+import ProgressBarWrapper from "@/providers/ProgressBarWrapper";
 const bespoke = localFont({
   src: [
     {
@@ -144,12 +144,14 @@ export default function RootLayout({
           // generalsans.variable
         )}
       >
-        <SessionProviderWrapper>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
-            <Toaster />
-          </ThemeProvider>
-        </SessionProviderWrapper>
+        <ProgressBarWrapper>
+          <SessionProviderWrapper>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              {children}
+              <Toaster />
+            </ThemeProvider>
+          </SessionProviderWrapper>
+        </ProgressBarWrapper>
       </body>
     </html>
   );
