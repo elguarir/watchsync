@@ -46,9 +46,6 @@ export function EditDrawer({
     })
       .then(() => {
         toast.success("Saved!", {
-          style: {
-            minWidth: "250px",
-          },
           className: "dark:bg-muted dark:text-orange-50",
         });
         router.refresh();

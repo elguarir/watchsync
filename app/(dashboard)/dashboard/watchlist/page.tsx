@@ -1,11 +1,10 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AddMovieDrawer } from "@/components/AddNewMovieDrawer";
-import WatchListCard from "@/components/WatchListCard";
 import { Metadata } from "next";
 import prisma from "@/lib/db";
 import { useAuthSession } from "@/lib/hooks/useAuthSession";
-
+import WatchlistTitles from "@/components/WatchlistTitles";
 
 export const metadata: Metadata = {
   title: "Watchlist",
@@ -13,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Watchlist() {
-  const session = await useAuthSession()
+  const session = await useAuthSession();
   let user_id = null;
   if (session) {
     user_id = session.user.userId;
@@ -38,13 +37,21 @@ export default async function Watchlist() {
         },
       },
     },
+    take: 20,
     orderBy: {
       createdAt: "desc",
     },
   });
 
+  const titlesCount = await prisma.usertitle.count({
+    where: { userId: user_id },
+  });
+
+  let totalPages = Math.ceil(titlesCount / 20);
+
+  console.log(totalPages, titlesCount);
   return (
-    <div className="flex flex-col pb-12">
+    <div className="flex flex-col">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-medium tracking-wide font-general">
           Your watchlist
@@ -59,53 +66,11 @@ export default async function Watchlist() {
           <TabsTrigger value="favourites">Favourites</TabsTrigger>
         </TabsList>
 
-        <TabsContent
-          value="all"
-          className="pt-4 max-md:flex max-md:flex-col max-md:space-y-3 md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-4 data-[state=inactive]:hidden transition"
-        >
-          {watchlist.map((item) => (
-            <WatchListCard
-              key={item.title.id}
-              isFavourite={item.isFavourite}
-              isWatched={item.isWatched}
-              rating={item.rating}
-              title={item.title}
-            />
-          ))}
-        </TabsContent>
-        <TabsContent
-          value="watched"
-          className="pt-4 max-md:flex max-md:flex-col max-md:space-y-3 md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-4 data-[state=inactive]:hidden transition"
-        >
-          {watchlist
-            .filter((item) => item.isWatched)
-            .map((item) => (
-              <WatchListCard
-                key={item.title.id}
-                isFavourite={item.isFavourite}
-                isWatched={item.isWatched}
-                rating={item.rating}
-                title={item.title}
-              />
-            ))}
-        </TabsContent>
-
-        <TabsContent
-          value="favourites"
-          className="pt-4 max-md:flex max-md:flex-col max-md:space-y-3 md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-4 data-[state=inactive]:hidden transition"
-        >
-          {watchlist
-            .filter((item) => item.isFavourite)
-            .map((item) => (
-              <WatchListCard
-                key={item.title.id}
-                isFavourite={item.isFavourite}
-                isWatched={item.isWatched}
-                rating={item.rating}
-                title={item.title}
-              />
-            ))}
-        </TabsContent>
+        <WatchlistTitles
+          initialTitles={watchlist}
+          pages={totalPages}
+          count={titlesCount}
+        />
       </Tabs>
     </div>
   );

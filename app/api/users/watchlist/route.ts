@@ -3,8 +3,9 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { useAuthSession } from "@/lib/hooks/useAuthSession";
 export async function GET(request: NextRequest) {
-  
-  
+  const { searchParams } = new URL(request.url);
+  const page = searchParams.get("page");
+
   const session = await useAuthSession();
   if (!session)
     return NextResponse.json(
@@ -14,29 +15,59 @@ export async function GET(request: NextRequest) {
   const user_id = session.user.userId;
 
   try {
-    const watchlist = await prisma.usertitle.findMany({
-      where: { userId: user_id },
-      select: {
-        isFavourite: true,
-        isWatched: true,
-        rating: true,
-        title: {
-          select: {
-            id: true,
-            title: true,
-            type: true,
-            released: true,
-            vote_average: true,
-            genres: true,
-            overview: true,
-            poster_path: true,
-            backdrop_path: true,
+    // @ts-ignore
+    let watchlist = [];
+    if (page) {
+      watchlist = await prisma.usertitle.findMany({
+        where: { userId: user_id },
+        select: {
+          isFavourite: true,
+          isWatched: true,
+          rating: true,
+          title: {
+            select: {
+              id: true,
+              title: true,
+              type: true,
+              released: true,
+              vote_average: true,
+              genres: true,
+              overview: true,
+              poster_path: true,
+              backdrop_path: true,
+            },
           },
         },
-      },
-    });
+        orderBy: { createdAt: "desc" },
+        take: 20,
+        skip: (parseInt(page) - 1) * 20,
+      });
+      return NextResponse.json(watchlist);
+    }
 
-    if (watchlist) {
+    if (!page) {
+      watchlist = await prisma.usertitle.findMany({
+        where: { userId: user_id },
+        select: {
+          isFavourite: true,
+          isWatched: true,
+          rating: true,
+          title: {
+            select: {
+              id: true,
+              title: true,
+              type: true,
+              released: true,
+              vote_average: true,
+              genres: true,
+              overview: true,
+              poster_path: true,
+              backdrop_path: true,
+            },
+          },
+        },
+        orderBy: { createdAt: "asc" },
+      });
       return NextResponse.json(watchlist);
     }
     return NextResponse.json(

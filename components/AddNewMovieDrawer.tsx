@@ -73,11 +73,7 @@ export function AddMovieDrawer() {
       });
       const data = await res.json();
       toast.success("Added to watchlist!", {
-        style: {
-          minWidth: "250px",
-        },
         className: "dark:bg-muted dark:text-orange-50",
-        position: "bottom-center",
       });
       router.refresh();
       router.push("/dashboard/watchlist");
