@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
       id: data.id as number,
     },
   });
+  
   if (!title) {
     await prisma.title.create({
       data: {

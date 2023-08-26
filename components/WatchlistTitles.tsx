@@ -2,7 +2,7 @@
 
 import { TabsContent } from "./ui/tabs";
 import WatchListCard from "./WatchListCard";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 interface TitleProp {
@@ -36,7 +36,7 @@ function WatchlistTitles({ initialTitles, pages, count }: Props) {
   const { ref, inView } = useInView({
     threshold: 1,
   });
-  
+
   useEffect(() => {
     setTitles(initialTitles);
   }, [initialTitles]);
@@ -52,7 +52,6 @@ function WatchlistTitles({ initialTitles, pages, count }: Props) {
 
   useEffect(() => {
     const loadMoreTitles = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // simlating a min delay
       if (inView && page <= pages && loading) {
         setPage((prev) => prev + 1);
         setLoading(false);
@@ -65,14 +64,15 @@ function WatchlistTitles({ initialTitles, pages, count }: Props) {
         }
       }
     };
-
-    loadMoreTitles();
+    setTimeout(() => {
+      loadMoreTitles();
+    }, 700);
   }, [inView, page, pages]);
 
   return (
     <>
       <TabsContent value="all">
-        <div className="pt-4 max-md:flex max-md:flex-col max-md:space-y-3 md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-4 data-[state=inactive]:hidden transition">
+        <div className="pt-4 max-md:flex max-md:flex-col max-md:space-y-3 md:grid md:grid-cols-2  md:gap-4 data-[state=inactive]:hidden transition">
           {titles.map((title) => (
             <WatchListCard
               key={title.title.id}
@@ -109,7 +109,7 @@ function WatchlistTitles({ initialTitles, pages, count }: Props) {
         </div>
       </TabsContent>
       <TabsContent value="watched">
-        <div className="pt-4 max-md:flex max-md:flex-col max-md:space-y-3 md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-4 data-[state=inactive]:hidden transition">
+        <div className="pt-4 max-md:flex max-md:flex-col max-md:space-y-3 md:grid md:grid-cols-2  md:gap-4 data-[state=inactive]:hidden transition">
           {titles
             .filter((title) => title.isWatched)
             .map((title) => (
@@ -148,7 +148,7 @@ function WatchlistTitles({ initialTitles, pages, count }: Props) {
         </div>
       </TabsContent>
       <TabsContent value="favourites">
-        <div className="pt-4 max-md:flex max-md:flex-col max-md:space-y-3 md:grid md:grid-cols-2 xl:grid-cols-3 md:gap-4 data-[state=inactive]:hidden transition">
+        <div className="pt-4 max-md:flex max-md:flex-col max-md:space-y-3 md:grid md:grid-cols-2  md:gap-4 data-[state=inactive]:hidden transition">
           {titles
             .filter((title) => title.isFavourite)
             .map((title) => (
