@@ -30,23 +30,31 @@ export default async function Watchlist() {
         <AddMovieDrawer />
       </div>
       <div className="flex flex-col gap-3 pt-4 lg:flex-row">
-        <Card className="hidden lg:block lg:w-1/4 h-[2.5rem] filters"></Card>
-        <Tabs defaultValue="all" className="flex flex-col w-full lg:w-3/4 ">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="watched">Watched</TabsTrigger>
-            <TabsTrigger value="favourites">Favourites</TabsTrigger>
-          </TabsList>
-          {/* <Card className="flex items-center w-full p-2 mt-3 lg:hidden filters">
-            <TitlesFilters />
-          </Card> */}
+        {titlesCount === 0 ? (
+          <div className="flex flex-col py-16 items-center justify-center flex-1 text-center [text-wrap:balance]">
+            <h2 className="text-xl font-medium font-general">
+              Your watchlist is empty
+            </h2>
+            <p className="text-muted-foreground">
+              Add movies and TV shows to your watchlist to keep track of what
+              you want to watch.
+            </p>
+          </div>
+        ) : (
+          <Tabs defaultValue="all" className="flex flex-col w-full ">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="all">All</TabsTrigger>
+              <TabsTrigger value="watched">Watched</TabsTrigger>
+              <TabsTrigger value="favourites">Favourites</TabsTrigger>
+            </TabsList>
 
-          <WatchlistTitles
-            initialTitles={watchlist}
-            pages={totalPages}
-            count={titlesCount}
-          />
-        </Tabs>
+            <WatchlistTitles
+              initialTitles={watchlist}
+              pages={totalPages}
+              count={titlesCount}
+            />
+          </Tabs>
+        )}
       </div>
     </div>
   );

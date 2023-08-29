@@ -80,4 +80,5 @@ model Usertitle {
   updatedAt   DateTime @updatedAt
 
   @@unique([userId, titleId])
+  @@index([userId])
 }
