@@ -21,6 +21,7 @@ export default async function Dashboard() {
 
   // tv shows
   let popularTvShows = await GetPopularTvShows();
+  console.log(popularTvShows)
   let upcomingTvShows = await GetUpcomingTvShows();
 
   return (
@@ -166,7 +167,7 @@ export default async function Dashboard() {
                 — Upcoming Tv Shows
               </h2>
               <div className="relative">
-                <TitlesSlider type="tv-show" titles={upcomingTvShows} />
+                <TitlesSlider type="tv" titles={upcomingTvShows} />
               </div>
               <div className="flex items-center justify-end">
                 <Link
@@ -204,7 +205,7 @@ export default async function Dashboard() {
                 — Top Rated Tv Shows
               </h2>
               <div className="relative">
-                <TitlesSlider type="tv-show" titles={popularTvShows} />
+                <TitlesSlider type="tv" titles={popularTvShows} />
               </div>
               <div className="flex items-center justify-end">
                 <Link

@@ -9,6 +9,7 @@ import { Label } from "./ui/label";
 import { Card } from "./ui/card";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { DeleteDialog } from "./DeleteDialog";
 
 export function EditDrawer({
   title,
@@ -129,7 +130,7 @@ export function EditDrawer({
                       <Label htmlFor="favourite">Favourite</Label>
                     </div>
                   </div>
-                  <div className="grid w-full grid-cols-2 pt-3">
+                  <div className="grid w-full pt-3">
                     <div className="flex items-center space-x-3">
                       <Label htmlFor="rating">Rating</Label>
                       <Input
@@ -147,8 +148,11 @@ export function EditDrawer({
                         placeholder="7.5"
                       />
                     </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <DeleteDialog closeDrawer={() => setOpen(false)} titleId={title?.id} />
                     <Button
-                      className="text-center min-w-[132.875px] w-fit"
+                      className="text-center"
                       size={"sm"}
                       onClick={handleUpdate}
                       disabled={loading}

@@ -1,3 +1,5 @@
+import FeaturesSection from "@/components/FeaturesSection";
+import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -9,15 +11,15 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="container flex flex-col items-center w-full min-h-[100dvh] px-4 py-20 lg:p-20">
+    <main className="container flex flex-col items-center w-full min-h-[calc(100dvh-64px)] px-4 pb-4 pt-16">
       <section className="pt-6 pb-8 space-y-6 md:pb-12 md:pt-10">
         <div className="flex w-full mx-auto max-w-[64rem] flex-col items-center gap-4 text-center">
           <a
             className="px-3 py-1 text-xs font-medium whitespace-nowrap min-w-max rounded-2xl bg-muted"
             target="_blank"
-            href="https://twitter.com/watchsync"
+            href="https://twitter.com/mohaelguarir"
           >
-            Follow along on Twitter
+            Follow on Twitter
           </a>
 
           <h1 className="text-4xl text-foreground font-serif font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-[4.3rem]">
@@ -43,7 +45,7 @@ export default function Home() {
           </p>
           <div className="space-x-4">
             <Button asChild>
-              <Link href="#">Get Started</Link>
+              <Link href="/signup">Get Started</Link>
             </Button>
             <Button asChild variant={"outline"}>
               <Link href="/login">Login</Link>
@@ -51,6 +53,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <FeaturesSection />
+      <Footer />
     </main>
   );
 }

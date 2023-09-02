@@ -12,16 +12,12 @@ export function MainNav() {
       href: "/",
     },
     {
-      title: "Features",
-      href: "/features",
-    },
-    {
       title: "About",
-      href: "/about",
+      href: "#about",
     },
     {
       title: "Contact",
-      href: "/contact",
+      href: "mailto:moha@elguarir.com",
     },
   ];
 

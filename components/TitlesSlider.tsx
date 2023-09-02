@@ -109,7 +109,7 @@ export default function TitlesSlider({
                   </Badge>
                 </div>
                 <div className="flex items-center justify-end w-full mt-3">
-                  <SaveButton titleId={title?.id} type={type === "movie" ? "movie" : "tv"} />
+                  <SaveButton titleId={title?.id} type={type} />
                 </div>
               </div>
             </Card>

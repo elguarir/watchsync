@@ -47,23 +47,23 @@ export default function MobileNav({ session }: { session: any }) {
               <Link
                 onClick={() => setOpen(false)}
                 className="text-[0.975rem] w-full border-b dark:border-[#52525952] pt-4 pb-[11px] transition-colors duration-200 ease-in-out hover:text-orange-500 font-medium"
-                href="/icons"
+                href="/"
               >
-                Icons
+                Home
               </Link>
               <Link
                 onClick={() => setOpen(false)}
                 className="text-[0.975rem] w-full border-b dark:border-[#52525952] pt-4 pb-[11px] transition-colors duration-200 ease-in-out hover:text-orange-500 font-medium"
-                href="/illustrations"
+                href="#about"
               >
-                Illustrations
+                About
               </Link>
               <Link
                 onClick={() => setOpen(false)}
                 className="text-[0.975rem] w-full border-b dark:border-[#52525952] pt-4 pb-[11px] transition-colors duration-200 ease-in-out hover:text-orange-500 font-medium"
-                href="/templates"
+                href="mailto:moha@elguarir.com"
               >
-                Templates
+                Contact
               </Link>
               {session ? (
                 <div className="flex items-center w-full mt-4 space-x-2">
